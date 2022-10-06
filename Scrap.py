@@ -97,6 +97,7 @@ def getData(webPath,grName,selectId):
 
 def checkChanges(arr):
     bool=True
+
     wf=open("Data.txt","r+")
     lines=wf.readlines()
     for line in range(0,len(lines)):
@@ -110,12 +111,12 @@ def checkChanges(arr):
      
     wf.close()
     print(bool)
-    if(bool==False):
-        rf=open("Data.txt",'w+')
-        for i in arr:
-            # print(i)
-            rf.writelines(f'"{i}"\n')
-        rf.close()
+    # if(bool==False):
+    #     rf=open("Data.txt",'w+')
+    #     for i in arr:
+    #         # print(i)
+    #         rf.writelines(f'"{i}"\n')
+    #     rf.close()
     return bool
 
 grabData=getData("https://www.nticrabat.com/","DEVOWFS201","coursera-front-search-banner-input")
@@ -128,7 +129,7 @@ def sendMsg():
     header={
            "authorization":"OTE3ODYwMTM4NTc1MTAyMDMy.GlM0pX.3_4PcqxUfBkH-N7yKuv7AKXWCczRXA8tZHMuag"
     }
-    requests.post("https://discord.com/api/v9/channels/1027556314865487895/messages",data=payload,headers=header)
+    requests.post("https://discord.com/api/v9/channels/928725601546813513/messages",data=payload,headers=header)
     
 if(checkChanges(grabData)==False):
     sendMsg()
@@ -173,4 +174,4 @@ if(checkChanges(grabData)==False):
 #     SendMsg()
 #     time.sleep(2)
 
-time.sleep(10)
+time.sleep(30)
