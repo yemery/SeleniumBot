@@ -1,4 +1,5 @@
 
+from audioop import lin2adpcm
 from cgitb import text
 from email import header
 from importlib.resources import contents
@@ -97,26 +98,31 @@ def getData(webPath,grName,selectId):
 
 def checkChanges(arr):
     bool=True
-
+   
     wf=open("Data.txt","r+")
     lines=wf.readlines()
+    
+    # print(len(arr),len(lines))
     for line in range(0,len(lines)):
         for i in range(0,len(arr)):
+            # print(lines[line].rstrip() ,'***', arr[i])
             # print(f'"{arr[i]}"',f'"{lines[line].rstrip()}"')
             if(i==line):
-                if(lines[line].rstrip() !=arr[i]):
-                    # print(lines[line]+arr[i])
+                if(lines[line].rstrip()!= arr[i] or len(arr)!=len(lines) ):
+                    # print(lines[line].rstrip() +  arr[i])
                     bool=False
                     break
      
     wf.close()
     print(bool)
-    # if(bool==False):
-    #     rf=open("Data.txt",'w+')
-    #     for i in arr:
-    #         # print(i)
-    #         rf.writelines(f'"{i}"\n')
-    #     rf.close()
+    # for i in arr:
+    #     print(i.strip())
+    if(bool==False):
+        rf=open("Data.txt",'w+')
+        for i in arr:
+            # print(i)
+            rf.writelines(f'{i}\n')
+        rf.close()
     return bool
 
 grabData=getData("https://www.nticrabat.com/","DEVOWFS201","coursera-front-search-banner-input")
@@ -127,9 +133,9 @@ def sendMsg():
             "content":'schedule has been changed , Go check it'
     }
     header={
-           "authorization":"OTE3ODYwMTM4NTc1MTAyMDMy.GlM0pX.3_4PcqxUfBkH-N7yKuv7AKXWCczRXA8tZHMuag"
+           "authorization":"OTE3ODYwMTM4NTc1MTAyMDMy.GUXnHF.uuKPSYu58JAHP9gfjIJ9kzCFKbQvLJENVeY_O8"
     }
-    requests.post("https://discord.com/api/v9/channels/928725601546813513/messages",data=payload,headers=header)
+    requests.post("https://discord.com/api/v9/channels/1027556314865487895/messages",data=payload,headers=header)
     
 if(checkChanges(grabData)==False):
     sendMsg()
@@ -174,4 +180,4 @@ if(checkChanges(grabData)==False):
 #     SendMsg()
 #     time.sleep(2)
 
-time.sleep(30)
+time.sleep(10)
