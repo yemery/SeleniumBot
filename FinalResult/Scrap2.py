@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import requests
 
+import numpy as np
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -61,29 +62,26 @@ def getData(webPath,grName,selectId):
 def checkChanges(arr):
     bool=True
    
-    wf=open("mainPrj/Data.txt","r+")
+    wf=open("FinalResult\data.txt","r+")
     lines=wf.readlines()
+    semiArr=[]
+    for i in range(0,len(lines)):
+        # print(lines[i].rstrip().split(','),'*')
+        semiArr.append(lines[i].rstrip().split(','))
+    npSemiArr=np.array(semiArr)
+    npOldData=np.array(arr)
+    if(np.array_equal(npSemiArr,npOldData)==False or len(npSemiArr)!=len(npOldData)):
+        bool=False
     
-    # print(len(arr),len(lines))
-    for line in range(0,len(lines)):
-        for i in range(0,len(arr)):
-            # print(lines[line].rstrip() ,'***', arr[i])
-            # print(f'"{arr[i]}"',f'"{lines[line].rstrip()}"')
-            if(i==line):
-                if(lines[line].rstrip()!= arr[i] or len(arr)!=len(lines) ):
-                    # print(lines[line].rstrip() +  arr[i])
-                    bool=False
-                    break
      
-    wf.close()
     print(bool)
-    # for i in arr:
-    #     print(i.strip())
+    wf.close()
     if(bool==False):
-        rf=open("mainPrj/Data.txt",'w+')
-        for i in arr:
+        rf=open("FinalResult\data.txt",'w+')
+        for i in npOldData:
             # print(i)
-            rf.writelines(f'{i}\n')
+            joinArr=",".join(i)
+            rf.writelines(f'{joinArr}\n')
         rf.close()
     return bool
 
@@ -95,7 +93,7 @@ def sendMsg():
             "content":'schedule has been changed , Go check it'
     }
     header={
-           "authorization":"OTE3ODYwMTM4NTc1MTAyMDMy.GUXnHF.uuKPSYu58JAHP9gfjIJ9kzCFKbQvLJENVeY_O8"
+           "authorization":"OTE3ODYwMTM4NTc1MTAyMDMy.Gfqt6Y.COrDXpoZr9hYd2as3Oa2H2eMqSjgnrHu-Y3FGA"
     }
     requests.post("https://discord.com/api/v9/channels/1027556314865487895/messages",data=payload,headers=header)
     
