@@ -1,8 +1,5 @@
 
-from cgitb import text
-from email import header
-from importlib.resources import contents
-from turtle import update
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import requests
