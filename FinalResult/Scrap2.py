@@ -1,6 +1,5 @@
 
 
-from turtle import color
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import requests
@@ -125,9 +124,9 @@ def sendMsg():
             "content":'schedule has been changed , Go check it'
     }
     header={
-           "authorization":"OTE3ODYwMTM4NTc1MTAyMDMy.G0J6VD.JAuvmLPSTeulTvSfWRxyGhoZXTI-UXwJKolAg4"
+           "authorization":"MTAyODExMjk4OTIyNTc2MjkzNg.GbmRVW.djvW7QkkXg7KmwY9oltW40aAZAlpa9SH5tVG94"
     }
-    requests.post("https://discord.com/api/v9/channels/1027556314865487895/messages",data=payload,headers=header)
+    requests.post("https://discord.com/api/v9/channels/1028413220395962460/messages",data=payload,headers=header)
     
 if(checkChanges(grabData)==False):
     sendMsg()
